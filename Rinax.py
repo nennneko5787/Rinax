@@ -33,7 +33,7 @@ async def on_message(message):
 			headers = {'user-agent': 'Rinax Discord Bot/1.0'}
 			async with aiohttp.ClientSession() as session:
 				async with session.get("https://ja.wikipedia.org/w/api.php?action=query&titles={}&prop=extracts&formatversion=2&format=json&redirects=true".format(quote(marumarumaru_toha)),headers=headers) as response:
-					res = await res.json()
+					res = await response.json()
 			jsondata = json.loads(res.text)
 			try:
 				print(jsondata['query']['pages'][0]['missing'])
