@@ -5,7 +5,6 @@ import discord
 from urllib.parse import quote
 import re
 import aiohttp
-import json
 try:
 	from discordtoken import token
 except ImportError:
@@ -33,8 +32,7 @@ async def on_message(message):
 			headers = {'user-agent': 'Rinax Discord Bot/1.0'}
 			async with aiohttp.ClientSession() as session:
 				async with session.get("https://ja.wikipedia.org/w/api.php?action=query&titles={}&prop=extracts&formatversion=2&format=json&redirects=true".format(quote(marumarumaru_toha)),headers=headers) as response:
-					res = await response.json()
-			jsondata = json.loads(res)
+					jsondata = await response.json()
 			try:
 				print(jsondata['query']['pages'][0]['missing'])
 				embed=discord.Embed(title=marumarumaru_toha,description="見つかりませんでした。", color=0x9B95C9, url="https://ja.wikipedia.org/wiki/{}".format(quote("https://ja.wikipedia.org/w/index.php?go=%E8%A1%A8%E7%A4%BA&search={}&title={}&ns0=1".format(jsondata['parse']['title'],quote(jsondata['parse']['title']))))) #埋め込みの説明に、メッセージを挿入し、埋め込みのカラーを紫`#9B95C9`に設定
