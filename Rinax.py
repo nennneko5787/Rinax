@@ -31,7 +31,9 @@ async def on_message(message):
 			marumarumaru_toha = message.content[:-2]
 			print("{}をWikipediaで探すのを始めます。。。".format(marumarumaru_toha))
 			headers = {'user-agent': 'Rinax Discord Bot/1.0'}
-			res = requests.get("https://ja.wikipedia.org/w/api.php?action=query&titles={}&prop=extracts&formatversion=2&format=json&redirects=true".format(quote(marumarumaru_toha)), headers=headers)
+			async with aiohttp.ClientSession() as session:
+				async with session.get("https://ja.wikipedia.org/w/api.php?action=query&titles={}&prop=extracts&formatversion=2&format=json&redirects=true".format(quote(marumarumaru_toha)),headers=headers) as response:
+					res = await res.json()
 			jsondata = json.loads(res.text)
 			try:
 				print(jsondata['query']['pages'][0]['missing'])
