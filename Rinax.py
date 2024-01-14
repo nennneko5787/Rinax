@@ -4,7 +4,7 @@ import os
 import discord
 from urllib.parse import quote
 import re
-import requests  # 「pip install requests」などが必要
+import aiohttp
 import json
 try:
 	from discordtoken import token
